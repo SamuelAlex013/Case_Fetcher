@@ -22,3 +22,13 @@ def init_db():
     ''')
     conn.commit()
     conn.close()
+
+def insert_query(case_type, case_number, filling_year, raw_response):
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute('''
+    INSERT INTO queries (case_type, case_number, filling_year, raw_response)
+    VALUES (?, ?, ?, ?)
+    ''', (case_type, case_number, filling_year, raw_response))
+    conn.commit()
+    conn.close()

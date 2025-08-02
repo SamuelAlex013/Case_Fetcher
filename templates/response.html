@@ -1,0 +1,710 @@
+<html>
+
+<head></head>
+
+<body onload="window.parent.frames[1].document.getElementById('load').style.display='none';">
+    <style>
+        .errText {
+            font-size: 16px;
+            font-weight: bold;
+            font-family: 'Trebuchet MS';
+        }
+
+        .main {
+            font-family: Arial, Verdana, sans-serif;
+            color: #0000FF;
+            font-size: 14px;
+        }
+
+        td {
+            font-family: Arial;
+            font-size: 20pt;
+        }
+    </style>
+    <style>
+        .myDiv {
+            /*border: 5px outset red;*/
+            background-color: #fff;
+            width: 60%;
+            /*text-align: center;*/
+        }
+    </style>
+    <table bgcolor="#954d51" align="center" width="60%">
+        <tbody>
+            <tr>
+                <td align="left" valign="top" class="logo">
+                </td>
+                <td align="center" valign="top" style="color:#fff;">
+                    <h2 class="three-d-text">Delhi High Court</h2>
+                </td>
+                <td align="right" valign="top" class="icon">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <style>
+        .three-d-text {
+            color: #fff;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5),
+                -3px -3px 5px rgba(0, 0, 0, 0.5),
+                3px -3px 5px rgba(0, 0, 0, 0.5),
+                -3px 3px 5px rgba(0, 0, 0, 0.5);
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            font-size: 36px;
+            /* Adjust size as needed */
+            text-align: center;
+            text-transform: uppercase;
+            /* Makes the text uppercase */
+            margin-top: 20px;
+            /* Equal margin at the top */
+            margin-bottom: 20px;
+            /* Equal margin at the bottom */
+        }
+    </style>
+    <style type="text/css">
+        BODY {
+            MARGIN: 5px;
+            background-color: #f0f0f0;
+            scrollbar-3dlight-color: #000000;
+            scrollbar-base-color: #000000;
+            scrollbar-arrow-color: #000000;
+            scrollbar-track-color: #a0b6f0;
+            scrollbar-darkshadow-color: #e7d8c9;
+            scrollbar-face-color: #829a0c;
+            scrollbar-highlight-color: #e7d8c9;
+        }
+
+        TABLE,
+        TR,
+        TD,
+        BR,
+        BLOCKQUOTE,
+        PRE {
+            font-size: 6pt;
+            font-family: tahoma, luxi mono, helvetica, courier;
+        }
+
+        .txtBH122 {
+            border-right: #829a0c 1px solid;
+            border-top: #829a0c 1px solid;
+            border-left: #829a0c 1px solid;
+            border-bottom: #829a0c 1px solid;
+            font-family: tahoma, helvetica, luxi mono, courier;
+            font-size: 8pt;
+            height: 18px;
+            width: 122px;
+            font-weight: bold;
+        }
+
+        .txtBH55 {
+            border-right: #829a0c 1px solid;
+            border-top: #829a0c 1px solid;
+            border-left: #829a0c 1px solid;
+            border-bottom: #829a0c 1px solid;
+            font-family: tahoma, luxi mono, helvetica, courier;
+            font-size: 8pt;
+            height: 18px;
+            width: 55px;
+            font-weight: bold;
+        }
+
+        .txtB42 {
+            border-right: #829a0c 1px solid;
+            border-top: #829a0c 1px solid;
+            border-left: #829a0c 1px solid;
+            border-bottom: #829a0c 1px solid;
+            font-family: tahoma, luxi mono, helvetica, courier;
+            font-size: 8pt;
+            height: 18px;
+            width: 42px;
+        }
+
+        .txtB55 {
+            border-right: #829a0c 1px solid;
+            border-top: #829a0c 1px solid;
+            border-left: #829a0c 1px solid;
+            border-bottom: #829a0c 1px solid;
+            font-family: tahoma, luxi mono, helvetica, courier;
+            font-size: 8pt;
+            height: 18px;
+            width: 55px;
+        }
+
+        .txtB65 {
+            border-right: #829a0c 1px solid;
+            border-top: #829a0c 1px solid;
+            border-left: #829a0c 1px solid;
+            border-bottom: #829a0c 1px solid;
+            font-family: tahoma, luxi mono, helvetica, courier;
+            font-size: 8pt;
+            height: 18px;
+            width: 65px;
+        }
+
+        .txtB78 {
+            border-right: #829a0c 1px solid;
+            border-top: #829a0c 1px solid;
+            border-left: #829a0c 1px solid;
+            border-bottom: #829a0c 1px solid;
+            font-family: tahoma, luxi mono, helvetica, courier;
+            font-size: 8pt;
+            height: 18px;
+            width: 78px;
+        }
+
+        .txtCBO78 {
+            border-right: #829a0c 1px solid;
+            border-top: #829a0c 1px solid;
+            border-left: #829a0c 1px solid;
+            border-bottom: #829a0c 1px solid;
+            font-family: tahoma, luxi mono, helvetica, courier;
+            font-size: 8pt;
+            height: 72px;
+            width: 78px;
+        }
+
+        .txtCBO158 {
+            border-right: #829a0c 1px solid;
+            border-top: #829a0c 1px solid;
+            border-left: #829a0c 1px solid;
+            border-bottom: #829a0c 1px solid;
+            font-family: tahoma, luxi mono, helvetica, courier;
+            font-size: 8pt;
+            height: 72px;
+            width: 158px;
+        }
+
+        .txtB40 {
+            border-right: #829a0c 1px solid;
+            border-top: #829a0c 1px solid;
+            border-left: #829a0c 1px solid;
+            border-bottom: #829a0c 1px solid;
+            font-family: tahoma, luxi mono, helvetica, courier;
+            font-size: 8pt;
+            height: 18px;
+            width: 40px;
+            list-height: 16px;
+        }
+
+        .txtB44 {
+            border-right: #829a0c 1px solid;
+            border-top: #829a0c 1px solid;
+            border-left: #829a0c 1px solid;
+            border-bottom: #829a0c 1px solid;
+            font-family: tahoma, luxi mono, helvetica, courier;
+            font-size: 8pt;
+            height: 18px;
+            width: 44px;
+            list-height: 100;
+        }
+
+        .txtB48 {
+            border-right: #829a0c 1px solid;
+            border-top: #829a0c 1px solid;
+            border-left: #829a0c 1px solid;
+            border-bottom: #829a0c 1px solid;
+            font-family: tahoma, helvetica, luxi mono, courier;
+            font-size: 8pt;
+            height: 18px;
+            width: 48px;
+            list-height: 18px;
+        }
+
+        .txtB28 {
+            border-right: #829a0c 1px solid;
+            border-top: #829a0c 1px solid;
+            border-left: #829a0c 1px solid;
+            border-bottom: #829a0c 1px solid;
+            font-family: tahoma, luxi mono, helvetica, courier;
+            font-size: 8pt;
+            height: 18px;
+            width: 28px;
+            list-height: 18px;
+        }
+
+        .txtB122 {
+            border-right: #829a0c 1px solid;
+            border-top: #829a0c 1px solid;
+            border-left: #829a0c 1px solid;
+            border-bottom: #829a0c 1px solid;
+            font-family: tahoma, helvetica, luxi mono, courier;
+            font-size: 8pt;
+            height: 18px;
+            width: 122px;
+        }
+
+        .txtB128 {
+            border-right: #829a0c 1px solid;
+            border-top: #829a0c 1px solid;
+            border-left: #829a0c 1px solid;
+            border-bottom: #829a0c 1px solid;
+            font-family: tahoma, helvetica, luxi mono, courier;
+            font-size: 8pt;
+            height: 18px;
+            width: 128px;
+        }
+
+
+        .txtB158 {
+            border-right: #829a0c 1px solid;
+            border-top: #829a0c 1px solid;
+            border-left: #829a0c 1px solid;
+            border-bottom: #829a0c 1px solid;
+            font-family: tahoma, helvetica, luxi mono, courier;
+            font-size: 8pt;
+            height: 18px;
+            width: 158px;
+        }
+
+        .txtB88 {
+            border-right: #c3bf4a 1px solid;
+            border-top: #c3bf4a 1px solid;
+            border-left: #c3bf4a 1px solid;
+            border-bottom: #c3bf4a 1px solid;
+            font-family: tahoma, helvetica, luxi mono, courier;
+            font-size: 8pt;
+            height: 18px;
+            width: 88px;
+        }
+
+        .txtDis286 {
+            border-right: 1px solid #f0f0f0;
+            border-top: 1px solid #f0f0f0;
+            font-size: 8pt;
+            font-weight: bold;
+            color: #b8860b;
+            text-align: left;
+            text-valign: top;
+            border-left: 1px solid #f0f0f0;
+            width: 286px;
+            border-bottom: 1px solid #f0f0f0;
+            font-family: tahoma;
+            background-color: #f0f0f0;
+            height: 18px;
+        }
+
+        .txtNam225 {
+            border-right: #829a0c 1px solid;
+            border-top: #829a0c 1px solid;
+            border-left: #829a0c 1px solid;
+            border-bottom: #829a0c 1px solid;
+            font-family: tahoma, helvetica, luxi mono, courier;
+            font-size: 8pt;
+            height: 18px;
+            width: 225px;
+        }
+
+        .fontlb {
+            font-weight: bold;
+            font-size: 10pt;
+            color: #000000;
+            font-family: tahoma, helvetica, luxi mono, courier;
+            text-decoration: none;
+        }
+
+        .fontHB {
+            font-weight: bold;
+            font-size: 10pt;
+            color: #000000;
+            font-family: tahoma, helvetica, luxi mono, courier;
+            text-decoration: none;
+        }
+
+        .fontB {
+            font-size: 8pt;
+            color: #000000;
+            font-family: tahoma, helvetica, luxi mono, courier;
+            text-decoration: none;
+        }
+
+        .fontLWUB {
+            font-weight: bold;
+            font-size: 12pt;
+            color: #000000;
+            font-family: tahoma, luxi mono, helvetica, courier;
+            text-decoration: underline;
+        }
+
+        .fontTL0 {
+
+            font-weight: bold;
+            font-size: 10pt;
+            color: #000000;
+            font-family: tahoma, helvetica, luxi mono, courier;
+            text-decoration: none;
+        }
+
+        .fontTL1 {
+
+            font-weight: bold;
+            font-size: 12pt;
+            color: #000000;
+            font-family: tahoma, helvetica, luxi mono, courier;
+            text-decoration: none;
+        }
+
+        .fontTL2 {
+
+            font-weight: bold;
+            font-size: 14pt;
+            color: #b8860b;
+            font-family: tahoma, helvetica, luxi mono, courier;
+            text-decoration: none;
+        }
+
+        .fontN {
+            font-size: 8pt;
+            color: #000000;
+            font-family: tahoma, helvetica, luxi mono, courier;
+            text-decoration: none;
+        }
+
+        .fontHU {
+            font-weight: bold;
+            font-size: 10pt;
+            color: #000000;
+            font-family: tahoma, helvetica, luxi mono, courier;
+            text-decoration: underline;
+        }
+
+        .fontHR {
+            font-weight: bold;
+            font-size: 8pt;
+            color: #000000;
+            font-family: tahoma, luxi mono, helvetica, courier;
+            text-decoration: none;
+        }
+
+        .fontNG {
+            font-weight: bold;
+            font-size: 8pt;
+            color: #b8860b;
+            font-family: tahoma, luxi mono, helvetica, courier;
+            text-decoration: none;
+        }
+
+        .fontErr {
+
+            font-weight: bold;
+            font-size: 10pt;
+            color: #000000;
+            font-family: tahoma, luxi mono, helvetica, courier;
+
+            text-decoration: none;
+        }
+
+        .Button3 {
+            font-weight: bold;
+            font-family: tahoma, luxi mono, helvetica, courier;
+            font-size: 8pt;
+            position: relative;
+            height: 16px;
+            width: 58px;
+            color: #000000;
+            background: #b3c2ff solid;
+            border-bottom: 1px solid #666600;
+            border-right: 1px solid #666600;
+            border-left: 1px solid #999966;
+            border-top: 1px solid #999966;
+            text-decoration: none;
+            cursor: hand;
+        }
+
+        .amover {
+            font-weight: bold;
+            font-size: 8pt;
+            color: #c3bf4a;
+            font-family: tahoma;
+            text-decoration: none;
+        }
+
+        .amout {
+            font-weight: bold;
+            font-size: 8pt;
+            color: #000000;
+            font-family: tahoma;
+            text-decoration: none;
+        }
+
+        a.tree:visited {
+            text-decoration: underline;
+            font-size: 10pt;
+            color: #0000ff;
+            font-family: tahoma, luxi mono, helvetica, courier;
+            font-weight: bold;
+        }
+
+        a.tree:link {
+            text-decoration: underline;
+            font-size: 10pt;
+            color: #0000ff;
+            font-family: tahoma, luxi mono, helvetica, courier;
+            font-weight: bold;
+        }
+
+        a.tree:hover {
+            text-decoration: underline;
+            font-size: 10pt;
+            color: #f7ae16;
+            font-family: tahoma, luxi mono, helvetica, courier;
+            font-weight: bold;
+        }
+
+        a.tree:active {
+            text-decoration: underline;
+            font-size: 10pt;
+            color: #0000ff;
+            font-family: tahoma, luxi mono, helvetica, courier;
+            font-weight: bold;
+        }
+
+
+        a.treeN:visited {
+            text-decoration: underline;
+            font-size: 10pt;
+            color: #0000ff;
+            font-family: tahoma, luxi mono, helvetica, courier;
+            font-weight: bold;
+        }
+
+        a.treeN:link {
+            text-decoration: underline;
+            font-size: 10pt;
+            color: #0000ff;
+            font-family: tahoma, luxi mono, helvetica, courier;
+            font-weight: bold;
+        }
+
+        a.treeN:hover {
+            text-decoration: underline;
+            font-size: 10pt;
+            color: #f7ae16;
+            font-family: tahoma, luxi mono, helvetica, courier;
+            font-weight: bold;
+        }
+
+        a.treeN:active {
+            text-decoration: underline;
+            font-size: 10pt;
+            color: #0000ff;
+            font-family: tahoma, luxi mono, helvetica, courier;
+            font-weight: bold;
+        }
+
+        div {
+
+            font-family: tahoma, luxi mono, helvetica, courier;
+            background-position: none
+        }
+
+        #navcontainer ul {
+            float: left;
+
+            margin: 0;
+            padding: 0;
+            font-weight: bold;
+            font-size: 12px;
+            color: #0000ff;
+            background: #ccc;
+        }
+
+        #navcontainer ul li {
+            display: inline;
+        }
+
+        #navcontainer ul li a {
+            float: left;
+            padding: 5px 10px;
+            background: #ccc;
+            color: #0000ff;
+            text-decoration: none;
+            border-right: 1px solid #fff;
+        }
+
+        #navcontainer ul li a:hover {
+            color: #0000ff;
+            background: #69c;
+        }
+    </style>
+
+    <center>
+        <table width="60%" heigth="10px" cellpadding="0" align="center" cellspacing="0" border="0" bgcolor="#fff">
+            <tbody>
+                <tr width="60%">
+                    <td width="60%" align="right">&nbsp;</td>
+                </tr>
+            </tbody>
+        </table>
+        <table width="60%" height="10" cellpadding="0" align="center" cellspacing="0" border="0" bgcolor="#fff">
+            <tbody>
+                <tr>
+                    <td align="center"><input type="button" name="back" value="Back" class="Button3"
+                            onclick="window.open('guiCaseWise.php');" target="_self"><input type="button" name="print"
+                            value="Print" class="Button3" onclick="window.print();"></td>
+                </tr>
+                <tr>
+                    <td align="center"><b><u>
+                                <font size="4">HIGH COURT OF DELHI</font>
+                            </u></b></td>
+                </tr>
+            </tbody>
+        </table>
+        <form name="ListFiling" action="http://lobis.nic.in/casetype1.php?scode=31&amp;fflag=1" method="post"
+            class="style3" id="form3" target="_blank">
+            <table cellpadding="0" cellspacing="0" border="0" width="60%" bgcolor="#fff">
+                <tbody>
+                    <tr>
+                        <td width="100px" align="right">
+                            <font size="2"><b>Case No :&nbsp;</b></font>
+                        </td>
+                        <td width="200px" align="left">
+                            <font size="2">W.P.(C)-1/2023</font>
+                        </td>
+                        <td width="100px" align="left">
+                            <font size="2">&nbsp;</font>
+                        </td>
+                        <td width="200px" align="right">
+                            <font size="2"><b>Date of Filing : &nbsp;</b></font>
+                        </td>
+                        <td width="100px" align="left">
+                            <font size="2"> 01-jan-2023</font>
+                        </td>
+                    </tr>
+                    <tr></tr>
+                    <tr>
+                        <td width="100px" align="right">
+                            <font size="2"><b>CNR No. :&nbsp;</b></font>
+                        </td>
+                        <td width="200px" align="left">
+                            <font size="2"></font>
+                        </td>
+                        <td width="100px" align="left">
+                            <font size="2">&nbsp;</font>
+                        </td>
+                        <td width="200px" align="right">
+                            <font size="2"><b>Date of Registration : &nbsp;</b></font>
+                        </td>
+                        <td width="100px" align="left">
+                            <font size="2">02-jan-2023</font>
+                        </td>
+                    </tr>
+                    <tr></tr>
+                    <tr>
+                        <td width="100px" align="right">
+                            <font size="2"><b>Status :&nbsp;</b></font>
+                        </td>
+                        <td width="200px" align="left">
+                            <font size="2">DISPOSED</font>
+                        </td>
+                        <td width="100px" align="left">
+                            <font size="2"><input name="ctype" type="hidden" value="W.P.(C)"> <input name="cnum"
+                                    type="hidden" value="1"> <input name="cyear" type="hidden" value="2023">
+                                <font size="3"></font>
+                            </font>
+                        </td>
+                        <td width="200px" align="right">
+                            <font size="2"><b><b>Date of Disposal : &nbsp;</b></b></font>
+                        </td>
+                        <td width="100px" align="left">
+                            <font size="2">17-feb-2023</font>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table cellpadding="0" cellspacing="0" border="0" width="60%" bgcolor="#fff">
+                <tbody>
+                    <tr>
+                        <td align="center">
+                            <font size="2"><b>ARJUN ANAND <br>Vs.</b></font>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <font size="2"><b>UNIVERSITY OF DELHI &amp; ORS</b></font>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+        <table cellpadding="0" cellspacing="0" border="0" width="60%" bgcolor="#fff">
+            <tbody>
+                <tr>
+                    <td width="200px" align="right" valign="top">
+                        <font size="2"><b>Dealing Assistant : &nbsp;</b></font>
+                    </td>
+                    <td align="left" valign="top">
+                        <font size="2">D-02</font>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr height="10px">
+                    <td></td>
+                </tr>
+                <tr>
+                    <td width="200px" align="right" valign="top">
+                        <font size="2"><b>Filing Advocate : &nbsp;</b></font>
+                    </td>
+                    <td align="left" valign="top">
+                        <font size="2">MANOJ KUMAR GAHLAUT</font>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr height="10px">
+                    <td></td>
+                </tr>
+                <tr>
+                    <td width="200px" align="right" valign="top">
+                        <font size="2"><b>Subject 1 : &nbsp;</b></font>
+                    </td>
+                    <td align="left" valign="top">
+                        <font size="2">Other disputes relating to academic institutions</font>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr height="10px">
+                    <td></td>
+                </tr>
+                <tr>
+                    <td width="200px" align="right" valign="top">
+                        <font size="2"><b>Subject2 : &nbsp;</b></font>
+                    </td>
+                    <td align="left" valign="top">
+                        <font size="2"></font>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr height="10px">
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <table bgcolor="#fff" width="60%">
+            <form action="case_history.php" method="post"></form>
+            <input name="casetype" type="hidden" value="W.P.(C)"> <input name="caseno" type="hidden" value="1"> <input
+                name="caseyr" type="hidden" value="2023"><input type="hidden" name="acode" id="acode" value=""><input
+                type="hidden" name="6_letters_code" id="6_letters_code" value="">
+            <tbody>
+                <tr bgcolor="#fff">
+                    <td align="center"><input type="submit" name="filing" id="filing" value="Filing Details"><input
+                            type="submit" name="listing" id="listing" value="Listing Details"></td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table bgcolor="#61677a" align="center" width="60%">
+            <tbody>
+                <tr>
+                    <td height="1">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td align="center" height="40" style="color:#fff;">
+                        <font size="2">
+                            Delhi High Court, Saturday , 02-Aug-2025<br>
+                            <a href="#">
+                                <font color="#009900"></font>
+                            </a> &nbsp;&nbsp;
+                        </font>
+                    </td>
+                </tr>
