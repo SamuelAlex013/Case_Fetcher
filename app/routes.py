@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request
 from app.scraper import scrape_court_cases, parse_court_cases
-from app.models import insert_query
+from app.models import insert_query, get_all_queries
 main = Blueprint("main", __name__)
 
 @main.route("/", methods=["GET", "POST"])
@@ -30,4 +30,7 @@ def index():
         # Render results page with parsed data
         return render_template("results.html", **parsed_data)
 
+    rows = get_all_queries()
+    #for row in rows:
+    #    print(dict(row))
     return render_template("index.html")

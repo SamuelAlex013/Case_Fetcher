@@ -31,9 +31,13 @@ def insert_query(case_type, case_number, filling_year, raw_response):
     VALUES (?, ?, ?, ?)
     ''', (case_type, case_number, filling_year, raw_response))
     conn.commit()
-    cur.execute('''
-    SELECT * from queries
-    ''')
-    
-    conn.commit()
     conn.close()
+
+
+def get_all_queries():
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM queries ORDER BY id DESC')
+    rows = cur.fetchall()
+    conn.close()
+    return rows
