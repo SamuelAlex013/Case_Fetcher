@@ -16,15 +16,8 @@ def scrape_court_cases(case_type, case_number, filling_year):
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
         
-        # Try ChromeDriverManager first, fallback to direct Chrome driver
-        try:
-            driver = webdriver.Chrome(
-                service=Service(ChromeDriverManager().install()),
-                options=options
-            )
-        except Exception:
-            # Fallback to direct Chrome driver (assumes chromedriver in PATH)
-            driver = webdriver.Chrome(options=options)
+       
+        driver = webdriver.Chrome(options=options)
 
         driver.get("https://dhcmisc.nic.in/pcase/guiCaseWise.php")
 
@@ -63,9 +56,52 @@ def scrape_court_cases(case_type, case_number, filling_year):
         time.sleep(5)  # Wait for the results to load
         raw_response = driver.page_source
 
+        # Try to get PDF links by clicking Listing Details button only
+        pdf_links = []
+        try:
+            # Look for Listing Details button and click it
+            listing_button = driver.find_element(By.NAME, "listing")
+            if listing_button:
+                listing_button.click()
+                time.sleep(5)  # Increased wait time for server response
+                
+                # Check if we got an error page instead of listing details
+                page_source = driver.page_source
+                if "PostgreSQL" in page_source or "Fatal error" in page_source or "Warning:" in page_source:
+                    print("Court website database error - PDF links not available")
+                    pdf_links = []  # No PDF links available due to server error
+                else:
+                    soup = BeautifulSoup(page_source, "html.parser")
+                    
+                    # Look for specific PDF download links
+                    for a in soup.find_all("a", href=True):
+                        href = a["href"]
+                        # Check for various PDF link patterns
+                        if (href.lower().endswith((".pdf", ".PDF")) or 
+                            "downloadorder" in href.lower() or
+                            "downloadOrderByDate" in href or
+                            "/app/download" in href.lower()):
+                            
+                            # Construct proper URL
+                            if href.startswith('http'):
+                                pdf_links.append(href)
+                            elif href.startswith('/'):
+                                pdf_links.append(f"https://delhihighcourt.nic.in{href}")
+                            else:
+                                pdf_links.append(f"https://dhcmisc.nic.in/{href}")
+                            
+                            print(f"Found PDF link: {pdf_links[-1]}")  # Debug print
+        except Exception as e:
+            print(f"Error clicking listing details: {e}")
+            pass  # If listing details button doesn't work, continue
+
         if driver:
             driver.quit()
-        return raw_response
+        
+        return {
+            "raw_response": raw_response,
+            "pdf_links": pdf_links
+        }
 
     except Exception as e:
         if driver:
@@ -73,57 +109,89 @@ def scrape_court_cases(case_type, case_number, filling_year):
         return {"error": str(e)}
     
 
-def parse_court_cases(raw_response):
+def parse_court_cases(response_data, case_type=None, case_number=None, filling_year=None):
+    # Handle both old format (string) and new format (dict)
+    if isinstance(response_data, str):
+        raw_response = response_data
+        extracted_pdf_links = []
+    else:
+        raw_response = response_data.get("raw_response", "")
+        extracted_pdf_links = response_data.get("pdf_links", [])
+    
     soup = BeautifulSoup(raw_response, "html.parser")
     result = {
         "parties": None,
         "filing_date": None,
         "next_hearing_date": None,
-        "pdf_links": []
+        "pdf_links": [],
+        "case_status": None,
+        "case_number": None
     }
 
-    # 1. Extract parties' names (look for a row or cell containing 'Petitioner' and 'Respondent')
-    for table in soup.find_all("table"):
-        text = table.get_text(" ", strip=True)
-        if "Petitioner" in text and "Respondent" in text:
-            # Try to extract parties from the table
-            rows = table.find_all("tr")
-            for row in rows:
-                cols = row.find_all("td")
-                if len(cols) >= 2:
-                    label = cols[0].get_text(strip=True).lower()
-                    value = cols[1].get_text(strip=True)
-                    if "petitioner" in label:
-                        result["parties"] = value
-                    elif "respondent" in label:
-                        if result["parties"]:
-                            result["parties"] += " vs " + value
-                        else:
-                            result["parties"] = value
+    # Use input parameters to construct case number
+    if case_type and case_number and filling_year:
+        result["case_number"] = f"{case_type}-{case_number}/{filling_year}"
 
-    # 2. Extract filing and next hearing dates
-    for table in soup.find_all("table"):
+    # Extract parties - look for the specific table structure with "Vs."
+    party_tables = soup.find_all("table", {"bgcolor": "#fff"})
+    for table in party_tables:
         rows = table.find_all("tr")
-        for row in rows:
-            cols = row.find_all("td")
-            if len(cols) >= 2:
-                label = cols[0].get_text(strip=True).lower()
-                value = cols[1].get_text(strip=True)
-                if "filing date" in label:
-                    result["filing_date"] = value
-                elif "next date" in label or "next hearing" in label:
-                    result["next_hearing_date"] = value
+        petitioner = None
+        respondent = None
+        
+        for i, row in enumerate(rows):
+            cell = row.find("td", {"align": "center"})
+            if cell:
+                text = cell.get_text(strip=True)
+                # Look for the row with "Vs." - petitioner is in this row
+                if "Vs." in text:
+                    # Extract petitioner (before "Vs.")
+                    petitioner = text.replace("Vs.", "").strip()
+                    # Look for respondent in the next row
+                    if i + 1 < len(rows):
+                        next_cell = rows[i + 1].find("td", {"align": "center"})
+                        if next_cell:
+                            respondent = next_cell.get_text(strip=True)
+                    break
+        
+        if petitioner and respondent:
+            result["parties"] = f"{petitioner} vs {respondent}"
+            break
 
-    # 3. Extract PDF links (order/judgment)
-    for a in soup.find_all("a", href=True):
-        href = a["href"].lower()
-        if href.endswith(".pdf"):
-            result["pdf_links"].append(a["href"])
+    # Extract dates from table rows - look for specific labels
+    all_fonts = soup.find_all("font")
+    for i, font in enumerate(all_fonts):
+        text = font.get_text(strip=True)
+        
+        # Filing date
+        if "Date of Filing" in text and not result["filing_date"]:
+            # Look for the next font element that contains the date
+            for j in range(i+1, min(i+5, len(all_fonts))):
+                next_text = all_fonts[j].get_text(strip=True)
+                if next_text and len(next_text) > 5:  # Basic date validation
+                    result["filing_date"] = next_text
+                    break
+        
+        # Next hearing date / Disposal date
+        if ("Date of Disposal" in text or "Next Date" in text) and not result["next_hearing_date"]:
+            # Look for the next font element that contains the date
+            for j in range(i+1, min(i+5, len(all_fonts))):
+                next_text = all_fonts[j].get_text(strip=True)
+                if next_text and len(next_text) > 5:  # Basic date validation
+                    result["next_hearing_date"] = next_text
+                    break
+        
+        # Case status
+        if "Status" in text and not result["case_status"]:
+            # Look for the next font element that contains the status
+            for j in range(i+1, min(i+5, len(all_fonts))):
+                next_text = all_fonts[j].get_text(strip=True)
+                if next_text and len(next_text) > 1:
+                    result["case_status"] = next_text
+                    break
 
-    # Only keep the most recent PDF link if available
-    if result["pdf_links"]:
-        result["pdf_link"] = result["pdf_links"][-1]
-    else:
-        result["pdf_link"] = None
+    # Use the PDF links extracted by the scraper
+    result["pdf_links"] = extracted_pdf_links
+    result["pdf_link"] = extracted_pdf_links[-1] if extracted_pdf_links else None
 
     return result

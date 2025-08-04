@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Court Case Results - Court Case Fetcher</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            color: #333;
+            border-bottom: 2px solid #954d51;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .case-info {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .info-row {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        .label {
+            font-weight: bold;
+            width: 150px;
+            color: #555;
+        }
+        .value {
+            flex: 1;
+            color: #333;
+        }
+        .parties {
+            font-size: 18px;
+            font-weight: bold;
+            color: #954d51;
+            text-align: center;
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+        .pdf-link {
+            background-color: #954d51;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        .pdf-link:hover {
+            background-color: #7a3d41;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #954d51;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .status {
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 3px;
+            display: inline-block;
+        }
+        .status.disposed {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .status.pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Delhi High Court Case Details</h1>
+        </div>
+
+        {% if case_number %}
+        <div class="case-info">
+            <div class="info-row">
+                <div class="label">Case Number:</div>
+                <div class="value">{{ case_number }}</div>
+            </div>
+            
+            {% if case_status %}
+            <div class="info-row">
+                <div class="label">Status:</div>
+                <div class="value">
+                    <span class="status {% if case_status == 'DISPOSED' %}disposed{% else %}pending{% endif %}">
+                        {{ case_status }}
+                    </span>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if filing_date %}
+            <div class="info-row">
+                <div class="label">Filing Date:</div>
+                <div class="value">{{ filing_date }}</div>
+            </div>
+            {% endif %}
+
+            {% if disposal_date %}
+            <div class="info-row">
+                <div class="label">Disposal Date:</div>
+                <div class="value">{{ disposal_date }}</div>
+            </div>
+            {% endif %}
+
+            {% if next_hearing_date %}
+            <div class="info-row">
+                <div class="label">Next Hearing:</div>
+                <div class="value">{{ next_hearing_date }}</div>
+            </div>
+            {% endif %}
+        </div>
+
+        {% if parties %}
+        <div class="parties">
+            {{ parties }}
+        </div>
+        {% endif %}
+
+        {% if pdf_link %}
+        <div>
+            <strong>Documents:</strong><br>
+            <a href="{{ pdf_link }}" target="_blank" class="pdf-link">
+                📄 View Latest Order/Judgment (PDF)
+            </a>
+        </div>
+        {% elif case_number %}
+        <div style="margin-top: 15px; padding: 10px; background-color: #fff3cd; border: 1px solid #ffeaa7; border-radius: 4px;">
+            <strong>📄 Documents:</strong><br>
+            <span style="color: #856404;">
+                PDF documents are currently unavailable due to court website maintenance. 
+                Please try again later or visit the <a href="https://dhcmisc.nic.in/pcase/guiCaseWise.php" target="_blank">court website</a> directly.
+            </span>
+        </div>
+        {% endif %}
+
+        {% if pdf_links and pdf_links|length > 1 %}
+        <div style="margin-top: 15px;">
+            <strong>All Documents ({{ pdf_links|length }} found):</strong><br>
+            {% for link in pdf_links %}
+            <a href="{{ link }}" target="_blank" class="pdf-link" style="margin: 2px;">
+                📄 Document {{ loop.index }}
+            </a>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <a href="/" class="back-link">← Search Another Case</a>
+        {% else %}
+        <div style="text-align: center; color: #666; margin: 50px 0;">
+            <h3>No case data found</h3>
+            <p>The case search did not return any results or the case number may not exist.</p>
+            <a href="/" class="back-link">← Try Another Search</a>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

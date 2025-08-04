@@ -31,4 +31,9 @@ def insert_query(case_type, case_number, filling_year, raw_response):
     VALUES (?, ?, ?, ?)
     ''', (case_type, case_number, filling_year, raw_response))
     conn.commit()
+    cur.execute('''
+    SELECT * from queries
+    ''')
+    
+    conn.commit()
     conn.close()
