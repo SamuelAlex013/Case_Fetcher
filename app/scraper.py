@@ -77,20 +77,10 @@ def scrape_court_cases(case_type, case_number, filling_year):
                     for a in soup.find_all("a", href=True):
                         href = a["href"]
                         # Check for various PDF link patterns
-                        if (href.lower().endswith((".pdf", ".PDF")) or 
-                            "downloadorder" in href.lower() or
-                            "downloadOrderByDate" in href or
-                            "/app/download" in href.lower()):
+                        if  "downloadorder" in href.lower():
+                            pdf_links.append(href)
                             
-                            # Construct proper URL
-                            if href.startswith('http'):
-                                pdf_links.append(href)
-                            elif href.startswith('/'):
-                                pdf_links.append(f"https://delhihighcourt.nic.in{href}")
-                            else:
-                                pdf_links.append(f"https://dhcmisc.nic.in/{href}")
-                            
-                            print(f"Found PDF link: {pdf_links[-1]}")  # Debug print
+
         except Exception as e:
             print(f"Error clicking listing details: {e}")
             pass  # If listing details button doesn't work, continue
