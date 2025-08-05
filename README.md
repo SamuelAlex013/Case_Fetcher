@@ -69,23 +69,12 @@ A Flask web application to fetch and parse Delhi High Court case details, includ
 
 ---
 
-## Demo Video
-- [Add your screen-capture demo link here]
-
----
 
 ## License
 MIT License (see LICENSE file)
 
 ---
 
-## Optional Extras
-- **Dockerfile**: Provided for easy containerization
-- **Pagination**: Not implemented (single case per search)
-- **Unit Tests**: See `tests/` folder (if present)
-- **CI Workflow**: See `.github/workflows/` (if present)
-
----
 
 ## Project Structure
 
@@ -100,8 +89,6 @@ Court_Case_fetcher/
 │   ├── index.html
 │   ├── results.html
 │   ├── queries.html
-├── static/
-│   └── case_types.json
 ├── requirements.txt
 ├── Dockerfile
 ├── docker-compose.yml
@@ -118,6 +105,3 @@ Court_Case_fetcher/
 - All queries are logged and viewable at `/queries`
 
 ---
-
-## Contact
-For questions or contributions, open an issue or pull request on GitHub.
