@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  court-case-fetcher:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./app/court_case.db:/app/app/court_case.db  # Persist database
+    environment:
+      - FLASK_ENV=production
+    restart: unless-stopped

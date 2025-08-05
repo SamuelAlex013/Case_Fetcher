@@ -57,12 +57,39 @@
                 display: flex;
                 gap: 16px;
             }
+            .loading-overlay {
+                display: none;
+                position: fixed;
+                top: 0; left: 0; right: 0; bottom: 0;
+                background: rgba(255,255,255,0.7);
+                z-index: 9999;
+                align-items: center;
+                justify-content: center;
+            }
+            .loading-overlay.active {
+                display: flex;
+            }
+            .spinner {
+                border: 6px solid #eee;
+                border-top: 6px solid #954d51;
+                border-radius: 50%;
+                width: 48px;
+                height: 48px;
+                animation: spin 1s linear infinite;
+            }
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
             @media (max-width: 700px) {
                 .container { padding: 15px 5vw; }
             }
         </style>
     </head>
     <body>
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="spinner"></div>
+        </div>
         <div class="container">
             <h1>Welcome to Court Case Fetcher!</h1>
             <form method="post" action="/">
@@ -255,6 +282,26 @@
         </div>
     </body>
     <script>
+        // Lazy load the case type dropdown options
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctype = document.getElementById('ctype');
+            if (ctype && ctype.options.length <= 2) {
+                fetch('/static/case_types.json')
+                    .then(response => response.json())
+                    .then(data => {
+                        ctype.innerHTML = '<option value="0" selected="true"> Select</option>';
+                        data.forEach(function(opt) {
+                            const option = document.createElement('option');
+                            option.value = opt;
+                            option.textContent = opt;
+                            ctype.appendChild(option);
+                        });
+                    });
+            }
+        });
         document.getElementById('filling_year').max = new Date().getFullYear();
+        document.querySelector('form').addEventListener('submit', function() {
+            document.getElementById('loadingOverlay').classList.add('active');
+        });
     </script>
 </html>
