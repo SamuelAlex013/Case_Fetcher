@@ -30,7 +30,12 @@ def index():
         # Render results page with parsed data
         return render_template("results.html", **parsed_data)
 
-    rows = get_all_queries()
+    # rows = get_all_queries()
     #for row in rows:
     #    print(dict(row))
     return render_template("index.html")
+
+@main.route("/queries")
+def queries():
+    rows = get_all_queries()
+    return render_template("queries.html", rows=rows)

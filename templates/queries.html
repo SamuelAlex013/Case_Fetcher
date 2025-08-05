@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stored Queries - Court Case Fetcher</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f5f5f5; }
+        .container { max-width: 900px; margin: 30px auto; background: #fff; padding: 20px; border-radius: 8px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 8px 12px; text-align: left; }
+        th { background: #954d51; color: #fff; }
+        tr:nth-child(even) { background: #f9f9f9; }
+        .back-link { margin-top: 20px; display: inline-block; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Stored Queries</h2>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Case Type</th>
+                <th>Case Number</th>
+                <th>Filing Year</th>
+                <th>Timestamp</th>
+            </tr>
+            {% for row in rows %}
+            <tr>
+                <td>{{ row['id'] }}</td>
+                <td>{{ row['case_type'] }}</td>
+                <td>{{ row['case_number'] }}</td>
+                <td>{{ row['filling_year'] }}</td>
+                <td>{{ row['time_stamp'] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <a href="/" class="back-link">← Back to Search</a>
+    </div>
+</body>
+</html>
