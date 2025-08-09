@@ -2,6 +2,7 @@
 
 A Flask web application to fetch and parse Delhi High Court case details, including parties, filing/disposal dates, status, and order/judgment PDF links, with automated CAPTCHA handling and a modern UI.
 
+Video Demo : https://www.loom.com/share/520807a61ee840febb7e9a2303c86f4b?sid=04f88412-d92d-498e-a378-feca8e887bc8
 ---
 
 ## Features
